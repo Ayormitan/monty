@@ -35,10 +35,10 @@ void char_print(stack_t **stack, unsigned int line_num)
 	int ascii;
 
 	if (stack == NULL || *stack == NULL)
-		string_err(11, line_num);
+		str_error(11, line_num);
 	ascii = (*stack)->n;
 	if (ascii < 0 || ascii > 127)
-		string_err(10, line_num);
+		str_error(10, line_num);
 	printf("%c\n", ascii);
 }
 /**

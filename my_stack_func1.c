@@ -9,9 +9,7 @@ void add_to_stack(stack_t **new_node, __attribute__((unused))unsigned int en)
 	stack_t *temp;
 
 	if (new_node == NULL || new_node == NULL)
-	{
 		exit(EXIT_FAILURE);
-	}
 	if (head == NULL)
 	{
 		head = *new_node;
@@ -56,12 +54,12 @@ void pop_on_top(stack_t **stack, unsigned int line_num)
 	stack_t *temp;
 
 	if (stack == NULL || *stack == NULL)
-		more_err(7, line_num);
+		more_error(7, line_num);
 
-	tmp = *stack;
-	*stack = tmp->next;
+	temp = *stack;
+	*stack = temp->next;
 	if (*stack != NULL)
-		(*stack)->prev = next;
+		(*stack)->prev = NULL;
 	free(temp);
 }
 
@@ -73,6 +71,6 @@ void pop_on_top(stack_t **stack, unsigned int line_num)
 void top_print(stack_t **stack, unsigned int line_num)
 {
 	if (stack == NULL || *stack == NULL)
-		more_err(6, line_num);
+		more_error(6, line_num);
 	printf("%d\n", (*stack)->n);
 }

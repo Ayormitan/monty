@@ -37,12 +37,15 @@ typedef struct instruction_s
         char *opcode;
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-int main(int argc, chr *argv[]);
+extern stack_t *head;
+typedef void (*op_func)(stack_t **, unsigned int);
+
+int main(int argc, char *argv[]);
 stack_t *make_node(int n);
-void add2queue(stack_t **new_node, _attribute_((unused))unsigned int ln);
+void add2queue(stack_t **new_node, __attribute__((unused))unsigned int ln);
 void freenodes(void);
 
-void error(int error_code, ...);
+void err(int error_code, ...);
 void more_error(int error_code, ...);
 void str_error(int error_code, ...);
 void nodeswap(stack_t **stack, unsigned int line_num);
@@ -50,16 +53,16 @@ void nop(stack_t **stack, unsigned  int line_num);
 void node_div(stack_t **stack, unsigned int line_num);
 void node_add(stack_t **stack, unsigned int line_num);
 void node_sub(stack_t **stack, unsigned int line_num);
-void string_prints(stack_t **stack, _attribute((unused))unsigned int ln);
+void string_prints(stack_t **stack, __attribute__((unused))unsigned int ln);
 void char_print(stack_t **stack, unsigned int line_num);
-void rot1(stack_t **stack, __attribute((unused))unsigned int ln);
-void rotr(stack_t **stack, __attribute_((unused))unsigned int ln);
+void rot1(stack_t **stack, __attribute__((unused))unsigned int ln);
+void rotr(stack_t **stack, __attribute__((unused))unsigned int ln);
 
 void file_opener(char *file_name);
 int line_parser(char *buff, int line_num, int format);
 void mon_read_file(FILE *fd);
-void find_my_func(char *codeop, char *val, int en, int format);
-void call_my_func(op_func func, char *op, char *val, int en, int format);
+void find_my_func(char *opcode, char *val, int en, int format);
+void call_my_func(op_func, char *op, char *val, int en, int format);
 
 void add_to_stack(stack_t **new_node, __attribute__((unused))unsigned int en); 
 void print_my_stack(stack_t **stack, unsigned int line_num);

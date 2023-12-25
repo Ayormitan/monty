@@ -13,7 +13,7 @@ void error(int error_code, ...)
 	char *op;
 	int lg_num;
 
-	va_start(ag, error_code);
+	va_start(args, error_code);
 	switch (error_code)
 	{
 		case 1:
@@ -95,10 +95,10 @@ void str_error(int error_code, ...)
 	switch (error_code)
 	{
 		case 10:
-			fprint(stderr, "L%d: can't pchar, value out of range\n", lg_num);
+			fprintf(stderr, "L%d: can't pchar, value out of range\n", lg_num);
 			break;
 		case 11:
-			fprint(stderr, "L%d: can't pchar, stack empty\n", lg_num);
+			fprintf(stderr, "L%d: can't pchar, stack empty\n", lg_num);
 			break;
 		default:
 			break;

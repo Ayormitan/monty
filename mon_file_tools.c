@@ -55,8 +55,10 @@ void mon_read_file(FILE *fd)
 	char *buff = NULL;
 	size_t len = 0;
 
-	for (line_num = 1; getline(&buff, &len, fd) != -1; line_num)
+	for (line_num = 1; getline(&buff, &len, fd) != -1; line_num++)
+	{
 		format = line_parser(buff, line_num, format);
+	}
 	free(buff);
 }
 
@@ -67,37 +69,35 @@ void mon_read_file(FILE *fd)
  * @en: entire line number
  * @format: storage format
  */
-void find_my_func(char *codeop, char *val, int en, int format)
+void find_my_func(char *opcode, char *val, int en, int format)
 {
 	int flags;
 	int j;
 
 	instruction_t func_list[] = {
-		{"push", add_to_stack}, {"pall", print_stack},
-		{"pint", print_top}, {"pop", pop_top},
-		{"nop", nop}, {"swap", swap_nodes},
-		{"add", add_nodes}, {"sub", sub_nodes},
-		{"div", div_nodes}, {"mul", mul_nodes},
-		{"mod", mod_nodes}, {"pchar", print_char},
-		{"pstr", print_string}, {"rot1", rot1},
+		{"push", add_to_stack}, {"pall", print_my_stack},
+		{"pint", top_print}, {"pop", pop_on_top},
+		{"nop", nop}, {"swap", nodeswap},
+		{"add", node_add}, {"sub", node_sub},
+		{"div", node_div}, {"multi", multi_nodes},
+		{"mode", mode_node}, {"pchar", char_print},
+		{"pstr", string_prints}, {"rot1", rot1},
 		{"rotr", rotr}, {NULL, NULL}
 	};
 
 	if (opcode[0] == '#')
-	{
 		return;
-	}
 
 	for (flags = 1, j = 0; func_list[j].opcode != NULL; j++)
 	{
-		if (strcmp(codeop, func_list[j].opcode) == 0)
+		if (strcmp(opcode, func_list[j].opcode) == 0)
 		{
-			call_func(func_list[j].f, opcode, val, en, format);
+			call_my_func(func_list[j].f, opcode, val, en, format);
 			flags = 0;
 		}
 	}
-	if (flags = 1)
-		err(3, en, opcode)
+	if (flags == 1)
+		err(3, en, opcode);
 }
 
 /**
@@ -113,7 +113,7 @@ void call_my_func(op_func func, char *op, char *val, int en, int format)
 {
 	stack_t *my_node;
 	int flags;
-	int j;
+	int i;
 
 	flags = 1;
 	if (strcmp(op, "push") == 0)
@@ -127,19 +127,19 @@ void call_my_func(op_func func, char *op, char *val, int en, int format)
 		{
 			err(5, en);
 		}
-		for (i = 0; val[i] != '\0': i++)
+		for (i = 0; val[i] != '\0'; i++)
 		{
-			if (isdigit(val[j]) == 0)
+			if (isdigit(val[i]) == 0)
 				err(5, en);
 		}
 		
-		my_node = create_node(atoi(val) * flags);
+		my_node = make_node(atoi(val) * flags);
 		if (format == 0)
 			func(&my_node, en);
 		if (format == 1)
-			add_to_queue(&node, en)
+			add2queue(&my_node, en);
 	}
 	else
 		func(&head, en);
 
-}
+	}
